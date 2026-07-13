@@ -3,7 +3,7 @@
 Reproducibility repository for:
 
 **"One Model or Two? A Systems Comparison of Unified versus Separate Detection Architectures for Edge-Deployed Crop Disease Monitoring"**
-Ding Shan Lin, UCSI University · ORCID [0009-0009-6031-8479](https://orcid.org/0009-0009-6031-8479)
+Lin Ding Shan, UCSI University · ORCID [0009-0009-6031-8479](https://orcid.org/0009-0009-6031-8479)
 
 ---
 
@@ -282,7 +282,7 @@ Run each model through the framework's native `val()` and you get: leaf **0.632*
 
 **The fix.** Force every architecture to sit the *same exam*: score all of them on the identical 12-class validation images, with identical ground truth, using one AP routine.
 
-For the separate configuration that means running the leaf model **and** the pest model on every image, merging their predictions into one 12-class prediction set (remapping each model's local class ids **by class name, never by index**), and scoring the merged set against the 12-class ground truth. Detections are gathered at a low confidence threshold (0.001) so all candidates enter the precision–recall computation, identically for both architectures.
+For the separate configuration that means running the leaf model **and** the pest model on every image, merging their predictions into one 12-class prediction set (remapping each model's local class ids **by class name, never by index**), and scoring the merged set against the 12-class ground truth. Detections are gathered at a low confidence threshold (0.001), with each model's own NMS at its default IoU of 0.7, so that all candidates enter the precision–recall computation identically for both architectures.
 
 Under that protocol the ordering reverses: unified 0.483, separate 0.399 (@640).
 
@@ -294,7 +294,7 @@ Under that protocol the ordering reverses: unified 0.483, separate 0.399 (@640).
 
 **B1 — no fusion.** Merge the leaf and pest boxes and keep everything. Cross-domain false detections (the leaf model confidently boxing a pest as a disease) stay and count as errors. The strictest treatment; a lower bound.
 
-**B2 — with fusion.** Apply class-agnostic cross-model NMS (IoU 0.5). This is what any real engineering team would deploy. The fair operating point.
+**B2 — with fusion.** Apply a single class-agnostic NMS pass (IoU 0.5) over the merged prediction set. It removes cross-model duplicates, which is its purpose, and also any within-model overlaps that survived that model's own suppression. This is what any real engineering team would deploy. The fair operating point.
 
 | | @640 | @1280 |
 |---|---|---|
@@ -495,7 +495,8 @@ CPU governor pinned to `performance`. Vendor throttling: progressive from **80 �
   title  = {One Model or Two? A Systems Comparison of Unified versus Separate
             Detection Architectures for Edge-Deployed Crop Disease Monitoring},
   year   = {2026},
-  note   = {Under review}
+  note   = {Under review},
+  url    = {https://github.com/xiaolin200206/One-vs-two-model}
 }
 ```
 
