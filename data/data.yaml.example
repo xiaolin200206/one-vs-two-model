@@ -1,0 +1,23 @@
+# 12-class merged dataset layout (images NOT released - proprietary)
+# Reproduce this structure with your own annotated data.
+train: ./train/images
+val: ./valid/images
+nc: 12
+names:
+  - Algal
+  - Leaf_rot
+  - leafhopper_damage
+  - Phomopsis
+  - Pink_disease
+  - Psyllid
+  - Psyllid_damage
+  - Root_disease
+  - Scale_insect
+  - Stem_borer
+  - weevil
+  - weevil_damage
+
+# Class grouping used by the "separate" architecture:
+#   leaf model  (5): Algal, Leaf_rot, Phomopsis, Pink_disease, Root_disease
+#   pest model  (7): leafhopper_damage, Psyllid, Psyllid_damage,
+#                    Scale_insect, Stem_borer, weevil, weevil_damage
